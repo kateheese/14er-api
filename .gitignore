@@ -30,5 +30,3 @@ node_modules
 npm-debug.log
 
 .env
-
-migrations/seed.sql
