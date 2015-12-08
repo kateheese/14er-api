@@ -1,0 +1,223 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice 14ers
+  description: >
+    #### Allows users save and access Colorado 14ers
+basePath: /api/v1
+parameters:
+  peak:
+    name: peak
+    in: path
+    description: The name of the peak
+    type: string
+    required: true
+definitions:
+  Links:
+    type: object
+  PeakCollection:
+    type: object
+    properties:
+      links:
+        $ref: '#/definitions/Links'
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/PeakResource'
+  PeakDocument:
+    type: object
+    properties:
+      links:
+        $ref: '#/definitions/Links'
+      data:
+        $ref: '#/definitions/PeakResource'
+  PeakResource:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - peak
+      id:
+        type: integer
+      attributes:
+        $ref: '#/definitions/Peak'
+      links:
+        $ref: '#/definitions/Links'
+  Peak:
+    type: object
+    properties:
+      name:
+        type: string
+      range:
+        type: string
+      rank:
+        type: integer
+      elevation:
+        type: integer
+      latitude:
+        type: string
+      longitude:
+        type: string
+      counties:
+        type: array
+      towns:
+        type: array
+      nat_forest:
+        type: array
+  Error:
+    type: object
+    properties:
+      error:
+        type: array
+        items:
+          type: object
+          properties:
+            status:
+              type: string
+            source:
+              type: object
+              properties:
+                pointer:
+                  type: string
+            title:
+              type: string
+            details:
+              type: string
+paths:
+  '/peaks':
+    get:
+      description: >
+        Lists all peaks
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakCollection'
+    post:
+      description: >
+        Creates a peak
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakDocument'
+        '400':
+          description: Validation error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+        - name: Payload
+          in: body
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                    - peak
+                  attributes:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      range:
+                        type: string
+                      rank:
+                        type: integer
+                      elevation:
+                        type: integer
+                      latitude:
+                        type: string
+                      longitude:
+                        type: string
+                      counties:
+                        type: array
+                      towns:
+                        type: array
+                      nat_forest:
+                        type: array
+  '/peaks/{range}':
+    get:
+      parameters:
+        - $ref: '#/parameters/range'
+      description: >
+        Lists all peaks in a given range
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakCollection'
+  '/peaks/{town}':
+    get:
+      parameters:
+        - $ref: '#/parameters/town'
+      description: >
+        Lists all peaks in a given town
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakCollection'
+  '/peaks/{forest}':
+    get:
+      parameters:
+        - $ref: '#/parameters/forest'
+      description: >
+        Lists all peaks in a given national forest
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakCollection'
+  '/peaks/ranges':
+    get:
+      description: >
+        Lists the unique ranges
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              links:
+                $ref: '#/definitions/Links'
+              data:
+                type: array
+                items:
+                  type: string
+  '/peaks/towns':
+    get:
+      description: >
+        Lists the unique towns
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              links:
+                $ref: '#/definitions/Links'
+              data:
+                type: array
+                items:
+                  type: string
+  '/peaks/forest':
+    get:
+      description: >
+        Lists the unique national forests
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              links:
+                $ref: '#/definitions/Links'
+              data:
+                type: array
+                items:
+                  type: string
