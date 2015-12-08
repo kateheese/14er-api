@@ -12,6 +12,12 @@ parameters:
     description: The name of the range
     type: string
     required: true
+  id:
+    name: id
+    in: path
+    description: The id of the peak
+    type: integer
+    required: true
 definitions:
   Links:
     type: object
@@ -39,9 +45,6 @@ definitions:
         enum:
         - peak
       id:
-        name: id
-        in: path
-        description: The id of the peak
         type: integer
       attributes:
         $ref: '#/definitions/Peak'
@@ -134,7 +137,7 @@ paths:
   '/peaks/{id}':
     get:
       parameters:
-        - $ref: '#/definitions/PeakResource/properties/id'
+        - $ref: '#/parameters/id'
       description: >
         Lists unique peak
       responses:
