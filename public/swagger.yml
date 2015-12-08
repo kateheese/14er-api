@@ -1,15 +1,15 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Microservice 14ers
+  title: Colorado 14er API
   description: >
-    #### Allows users save and access Colorado 14ers
+    #### Allows users to save and access Colorado 14ers
 basePath: /api/v1
 parameters:
-  peak:
-    name: peak
+  range:
+    name: range
     in: path
-    description: The name of the peak
+    description: The name of the range
     type: string
     required: true
 definitions:
@@ -39,6 +39,9 @@ definitions:
         enum:
         - peak
       id:
+        name: id
+        in: path
+        description: The id of the peak
         type: integer
       attributes:
         $ref: '#/definitions/Peak'
@@ -47,7 +50,7 @@ definitions:
   Peak:
     type: object
     properties:
-      name:
+      peak_name:
         type: string
       range:
         type: string
@@ -59,12 +62,6 @@ definitions:
         type: string
       longitude:
         type: string
-      counties:
-        type: array
-      towns:
-        type: array
-      nat_forest:
-        type: array
   Error:
     type: object
     properties:
@@ -96,7 +93,7 @@ paths:
             $ref: '#/definitions/PeakCollection'
     post:
       description: >
-        Creates a peak
+        Creates a new peak
       responses:
         '200':
           description: Success
@@ -122,7 +119,7 @@ paths:
                   attributes:
                     type: object
                     properties:
-                      name:
+                      peak_name:
                         type: string
                       range:
                         type: string
@@ -134,40 +131,23 @@ paths:
                         type: string
                       longitude:
                         type: string
-                      counties:
-                        type: array
-                      towns:
-                        type: array
-                      nat_forest:
-                        type: array
-  '/peaks/{range}':
+  '/peaks/{id}':
+    get:
+      parameters:
+        - $ref: '#/definitions/PeakResource/properties/id'
+      description: >
+        Lists unique peak
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PeakCollection'
+  '/peaks/ranges/{range}':
     get:
       parameters:
         - $ref: '#/parameters/range'
       description: >
-        Lists all peaks in a given range
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/PeakCollection'
-  '/peaks/{town}':
-    get:
-      parameters:
-        - $ref: '#/parameters/town'
-      description: >
-        Lists all peaks in a given town
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/PeakCollection'
-  '/peaks/{forest}':
-    get:
-      parameters:
-        - $ref: '#/parameters/forest'
-      description: >
-        Lists all peaks in a given national forest
+        Lists all peaks for a given range
       responses:
         '200':
           description: Success
@@ -177,38 +157,6 @@ paths:
     get:
       description: >
         Lists the unique ranges
-      responses:
-        '200':
-          description: Success
-          schema:
-            type: object
-            properties:
-              links:
-                $ref: '#/definitions/Links'
-              data:
-                type: array
-                items:
-                  type: string
-  '/peaks/towns':
-    get:
-      description: >
-        Lists the unique towns
-      responses:
-        '200':
-          description: Success
-          schema:
-            type: object
-            properties:
-              links:
-                $ref: '#/definitions/Links'
-              data:
-                type: array
-                items:
-                  type: string
-  '/peaks/forest':
-    get:
-      description: >
-        Lists the unique national forests
       responses:
         '200':
           description: Success
