@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS peaks;
 
 CREATE TABLE peaks (
@@ -7,6 +6,6 @@ CREATE TABLE peaks (
   range text,
   rank numeric,
   elevation numeric,
-  latitude text,
-  longitude text
+  latitude numeric,
+  longitude numeric
 );

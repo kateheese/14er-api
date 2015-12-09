@@ -62,9 +62,9 @@ definitions:
       elevation:
         type: integer
       latitude:
-        type: string
+        type: integer
       longitude:
-        type: string
+        type: integer
   Error:
     type: object
     properties:
@@ -131,9 +131,9 @@ paths:
                       elevation:
                         type: integer
                       latitude:
-                        type: string
+                        type: integer
                       longitude:
-                        type: string
+                        type: integer
   '/peaks/{id}':
     get:
       parameters:
