@@ -61,6 +61,8 @@ definitions:
         type: integer
       elevation:
         type: integer
+      towns:
+        type: string
       latitude:
         type: integer
       longitude:
@@ -130,6 +132,8 @@ paths:
                         type: integer
                       elevation:
                         type: integer
+                      towns:
+                        type: string
                       latitude:
                         type: integer
                       longitude:

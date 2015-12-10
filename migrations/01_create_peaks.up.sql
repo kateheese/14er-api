@@ -6,6 +6,7 @@ CREATE TABLE peaks (
   range text,
   rank numeric,
   elevation numeric,
+  towns text,
   latitude numeric,
   longitude numeric
 );
